@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 # Create your models here.
-class PublishedManager(models.Model):
+class PublishedManager(models.Manager):
   def get_queryset(self):
     return super(PublishedManager, self).get_queryset().filter(status='published')
 
