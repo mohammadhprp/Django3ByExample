@@ -7,7 +7,7 @@ from .models import Post
 def post_list(request):
   object_list = Post.published.all()
   paginator = Paginator(object_list, 3) # 3 posts in each page
-  page = request.get('page')
+  page = request.GET.get('page')
 
   try:
     posts = paginator.page(page)
@@ -18,9 +18,10 @@ def post_list(request):
     posts = paginator.page(paginator.num_pages)
 
   context = {
+    'page': page,
     'posts': posts,
-  }
-  
+    }
+
   return render(request, 'blog/post/list.html', context)
 
 
