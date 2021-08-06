@@ -56,13 +56,13 @@ def post_share(request, post_id):
   sent = False
 
   if request.method == 'POST':
-    form = EmailPostForm|(request>POST)
+    form = EmailPostForm(request.POST)
     if form.is_valid():
       cd = form.cleaned_data
-      post_url = request.build_absolute_url(post.get_absolute_url())
+      post_url = request.build_absolute_uri(post.get_absolute_url())
       subject = f"{cd['name']} recommends you read {post.title}"
-      message = f"Read {post.title} at {post.url} \n\n {cd['name']}\'s comments: {cd['comments']}"
-      send_mail(subject, message, 'webinfowebpage@gmail.com', [cd['to']])
+      message = f"Read {post.title} at {post_url} \n\n {cd['name']}\'s comments: {cd['comments']}"
+      send_mail(subject, message, 'youremail@gmail.com', [cd['to']])
       sent = True
   else:
     form = EmailPostForm()
