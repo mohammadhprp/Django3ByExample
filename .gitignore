@@ -5,7 +5,7 @@
 *.DS_Store
 **/__pycache__
 **/.DS_Store
-
+**/mysite/email.py
 # Django #
 *.log
 *.pot
