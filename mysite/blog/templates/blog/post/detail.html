@@ -1,5 +1,5 @@
 {% extends "blog/base.html" %}
-
+{% load humanize %}
 {% block title %} {{ post.title }} {% endblock %}
 
 {% block content %}
@@ -14,5 +14,33 @@
   <p>
     <a href="{% url 'blog:post_share' post.id %}">Share this post</a>
   </p>
+
+  {% with comments.count as total_comments %}
+  <h2>
+    {{ total_comments }} comment {{ total_comments|pluralize }}
+  </h2>
+  {% endwith %}
+
+  {% for comment in comments %}
+  <div class="comment">
+    <p class="info">
+      Comment {{ forloop.counter }} by {{ comment.name }} |
+      {{ comment.created|naturaltime}}
+    </p>
+    {{ comment.boy|linebreaks }}
+  </div>
+  {% empty %}
+    <p>There are no comments yet.</p>
+  {% endfor %}
+
+  {% if new_comment %}
+    <h2>Your commment has been added.</h2>
+  {% else %}
+    <h2>Add new commnet</h2>
+    <form method="post">
+      {{ comment_form.as_p }} {% csrf_token %}
+      <p><input value="Add commnet" type="submit"></p>
+    </form>
+  {% endif %}
 
 {% endblock %}
