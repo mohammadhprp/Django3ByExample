@@ -4,5 +4,5 @@
 
 
 <p align="center">
-  <img width="540" height="937" src="https://github.com/mohammadhprp/Django3ByExample/blob/master/screenshot/book-cover.jpg?">
+  <img width="590" height="937" src="https://github.com/mohammadhprp/Django3ByExample/blob/master/screenshot/book-cover.jpg?">
 </p>
