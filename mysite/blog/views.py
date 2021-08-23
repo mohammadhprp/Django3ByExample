@@ -3,7 +3,7 @@ from taggit.models import Tag
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.mail import send_mail
 from django.views.generic import ListView
-from django.contrib.postgres.search import SearchVector
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 from django.db.models import Count
 
 
@@ -68,9 +68,11 @@ def post_detail(request, year, month, day, post):
   else:
     comment_form = CommentForm()
 
-    post_tags_ids = post.tags.values_list('id', flat=True)
-    similar_posts = Post.published.filter(tags__in=post_tags_ids).exclude(id=post.id)
-    similar_posts = similar_posts.annotate(same_tags=Count('tags')).order_by('-same_tags','-publish')[:4]
+  post_tags_ids = post.tags.values_list('id', flat=True)
+  similar_posts = Post.published.filter(tags__in=post_tags_ids).exclude(id=post.id)
+  similar_posts = similar_posts.annotate(same_tags=Count('tags')).order_by('-same_tags','-publish')[:4]
+
+
 
 
   context = {
@@ -116,7 +118,11 @@ def post_search(request):
     form = SearchForm(request.GET)
     if form.is_valid():
       query = form.cleaned_data['query']
-      results = Post.published.annotate(search=SearchVector('title', 'body'), ).filter(search=query)
+      search_vectoor = SearchVector('title', weight='A') + SearchVector('body', weight='B')
+      search_query = SearchQuery(query)
+      results = Post.published.annotate(
+        search=search_vectoor,
+        rank=SearchRank(search_vectoor, search_query)).filter(rank__gte=0.3).order_by('-rank')
 
   context = {
     'form': form,
