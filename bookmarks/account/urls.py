@@ -13,6 +13,7 @@ from .views import (
     dashboard,
     register,
     user_login,
+    edit,
     )
 
 # app_name = 'account'
@@ -37,5 +38,8 @@ urlpatterns = [
     path('password_reset/done/', PasswordResetDoneView.as_view(), name='password_reset_done'),
     path('reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset/done/', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+
+    # profile edit
+    path('edit/', edit, name='edit')
 
 ]
