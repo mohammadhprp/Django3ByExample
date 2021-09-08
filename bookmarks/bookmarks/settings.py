@@ -132,8 +132,15 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 # E-mail
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
+
 # create an email.py file in the mysite dir and put your email and your password there!
 EMAIL_HOST_USER = email.host_email
 EMAIL_HOST_PASSWORD = email.host_password
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'account.authentication.EmailAuthBackend',
+]
