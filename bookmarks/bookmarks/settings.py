@@ -144,5 +144,7 @@ EMAIL_USE_TLS = True
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
+    'social_core.backends.facebook.FacebookOAuth2', 
+    # I can't verify on facebook developer becasue I live in Iran.
     'account.authentication.EmailAuthBackend',
 ]
