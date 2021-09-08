@@ -29,7 +29,16 @@
         <a href="{% url 'login' %}">Log-in</a>
       {% endif %}
     </span>
-
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li class="{{ message.tags }}">
+            {{ message|safe }}
+              <a href="#" class="close">x</a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
   </div>
   <div id="content">
     {% block content %}
