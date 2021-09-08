@@ -145,6 +145,10 @@ EMAIL_USE_TLS = True
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'social_core.backends.facebook.FacebookOAuth2', 
-    # I can't verify on facebook developer becasue I live in Iran.
+    # I can't verify on facebook developer because I live in Iran.
     'account.authentication.EmailAuthBackend',
 ]
+
+SOCIAL_AUTH_FACEBOOK_KEY = '' # Facebook App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = '' # Facebook App Secret
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
