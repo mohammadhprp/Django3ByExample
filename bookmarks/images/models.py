@@ -18,7 +18,7 @@ class Image(models.Model):
     return self.title
 
   def save(self, *args, **kwargs):
-    if not s.slug:
+    if not self.slug:
       self.slug = slugify(self.title)
       super().save(*args, **kwargs)
 
