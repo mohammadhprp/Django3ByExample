@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
 from django.contrib import messages
 
 from .forms import ImageCreateForm
@@ -38,3 +40,23 @@ def image_detail(request, id, slug):
   }
 
   return render(request, 'images/image/detail.html', context)
+
+@login_required
+@require_POST
+def image_like(request):
+  image_id = request.POST.get('id')
+  action = request.POST.get('action')
+  if image_id and action:
+    try:
+      image = Image.objects.get(id=image_id)
+      if action == 'like':
+        image.users_like.add(request.user)
+      else:
+        image.users_like.remove(request.user)
+
+      return JsonResponse({'status': 'ok'})
+
+    except:
+      pass
+
+  return JsonResponse({'status': 'error'})
