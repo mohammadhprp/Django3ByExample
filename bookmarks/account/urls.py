@@ -14,6 +14,8 @@ from .views import (
     register,
     user_login,
     edit,
+    user_list,
+    user_detail,
     )
 
 # app_name = 'account'
@@ -40,6 +42,9 @@ urlpatterns = [
     path('reset/done/', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 
     # profile edit
-    path('edit/', edit, name='edit')
+    path('edit/', edit, name='edit'),
+
+    path('users/', user_list, name='user_list'),
+    path('users/<username>', user_detail, name='user_detail'),
 
 ]
