@@ -14,6 +14,7 @@ from .forms import (LoginForm,
    UserEditForm,
  )
 from actions.utils import create_action
+from actions.models import Action
 
 
 def user_login(request):
@@ -70,7 +71,10 @@ def dashboard(request):
 
   if following_ids:
     actions = actions.filter(user_id__in=following_ids)
-  actions = actions[:10]
+  actions = actions.select_related(
+                                  'user',
+                                  'user__profile')\
+                                  .prefetch_related('target')[:10]
   
   context = {
     'section': 'dashboard',
