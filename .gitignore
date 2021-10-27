@@ -1,6 +1,7 @@
 # Single file
 *.log
 
+redis-*/
 **/migrations
 *.DS_Store
 **/__pycache__
